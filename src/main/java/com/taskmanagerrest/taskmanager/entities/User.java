@@ -23,5 +23,7 @@ public class User {
     private  String lastName;
     @Column(name = "email", nullable = false, unique = true)
     private  String email;
+    @Column(name = "image")
+    private  String image;
 
 }

@@ -16,7 +16,7 @@ public class Task {
     private  long id;
     @Column(name = "description", nullable = false)
     private String description;
-    @Column(name = "done", nullable = false)
+    @Column(name = "done", nullable = false,columnDefinition = "boolean default false")
     private boolean done;
     @Column(name="date_finish", nullable = false)
     private LocalDate dateFinish;

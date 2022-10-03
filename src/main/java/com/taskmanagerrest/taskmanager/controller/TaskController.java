@@ -28,6 +28,7 @@ public class TaskController {
 
     @PostMapping("/task")
     public Task createTask(@RequestBody Task task){
+        System.out.println(task);
         return  taskService.createTask(task);
     }
 
