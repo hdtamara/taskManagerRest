@@ -75,15 +75,13 @@ public class UserService implements  IUserService{
         if(userLogin==null){
             throw new UserNotFoundException("user not found with email : "+ user.getEmail());
         }
-        System.out.println(userLogin.isEnabled());
+
         if(!userLogin.isEnabled()){
             throw new UserNotEnabledException("user not enabled with email : "+ user.getEmail());
         }
 
-        String passwordHashes = userLogin.getPassword();
-
         Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
-        if(argon2.verify(passwordHashes, user.getPassword())){
+        if(argon2.verify(userLogin.getPassword(), user.getPassword())){
             return userLogin;
         };
 
