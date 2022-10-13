@@ -219,7 +219,7 @@ class UserServiceTest {
     void checkCredentiales() throws UserNotFoundException, CredentialException, UserNotEnabledException {
         //given
         given(userRepository.findByEmail(anyString())).willReturn(user);
-        given(argon2.verify(anyString(),anyString())).getMock();
+
         //when
         assertThatThrownBy(()->userService.checkCredentiales(user))
                 .isInstanceOf(CredentialException.class)
