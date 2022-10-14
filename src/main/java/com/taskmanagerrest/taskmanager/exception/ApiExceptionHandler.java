@@ -53,6 +53,14 @@ public class ApiExceptionHandler {
         return errorMap;
     }
 
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler({UserAlreadyExistsException.class})
+    public Map<String,String> handleUserExist(Exception ex){
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put("errorMessage", ex.getMessage());
+        return errorMap;
+    }
+
 
 
 }

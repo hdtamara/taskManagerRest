@@ -7,11 +7,14 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 
-
+import com.taskmanagerrest.taskmanager.entities.Rol;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -28,4 +31,5 @@ public class UserDto {
     @NotBlank(message = "Password shouldn't be empty")
     @Size(min = 10, message = "Passwor shouldn't be < 10 caracteres")   
     private String password;
+    private Set<Rol> roles = new HashSet<>();
 }

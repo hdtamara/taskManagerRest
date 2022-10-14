@@ -4,7 +4,7 @@ async function login(){
     datos.password = document.getElementById('password').value; 
     
    
-    const request = await fetch('user/login', {
+    const request = await fetch('auth/login', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -13,6 +13,7 @@ async function login(){
 
       body: JSON.stringify(datos)
     });
+    console.log(request);
     const token = await request.text(); 
 
     if(request.ok){

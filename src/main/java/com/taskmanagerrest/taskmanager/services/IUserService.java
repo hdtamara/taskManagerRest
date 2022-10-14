@@ -26,5 +26,7 @@ public interface IUserService   {
 
     public List<User> findByEnabled(boolean status);
 
+    public User findByEmail(String email);
+
 
 }

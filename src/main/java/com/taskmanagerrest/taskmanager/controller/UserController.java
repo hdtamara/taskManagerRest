@@ -5,14 +5,12 @@ import com.taskmanagerrest.taskmanager.entities.User;
 import com.taskmanagerrest.taskmanager.exception.UserAlreadyExistsException;
 import com.taskmanagerrest.taskmanager.exception.UserNotFoundException;
 import com.taskmanagerrest.taskmanager.services.IUserService;
-import com.taskmanagerrest.taskmanager.util.JWTUtil;
 
-import de.mkammerer.argon2.Argon2;
-import de.mkammerer.argon2.Argon2Factory;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,26 +18,25 @@ import java.util.List;
 import javax.validation.Valid;
 
 @RestController @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/auth")
+@CrossOrigin(origins = "http://127.0.0.1:5500/")
 public class UserController     {
 
-    private final JWTUtil jwtUtil;
+
     
     private final   IUserService userService;
 
+    private  final PasswordEncoder passwordEncoder;
+
     @GetMapping("/user")
-    public ResponseEntity<List<User>> findAll(@RequestHeader(value = "Authorization") String token){
-        if(!jwtUtil.validartoken(token)){
-            return null;
-        }
+    public ResponseEntity<List<User>> findAll(){
+
         return ResponseEntity.ok(userService.findAll());
     }
 
     @PostMapping("/user")
     public ResponseEntity<User> createUser(@RequestBody @Valid UserDto user) throws UserAlreadyExistsException{
-        Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
-        String hash = argon2.hash(1, 1024, 1, user.getPassword());
-        user.setPassword(hash);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return new ResponseEntity<>(userService.createUser(user),HttpStatus.CREATED);
     }
 

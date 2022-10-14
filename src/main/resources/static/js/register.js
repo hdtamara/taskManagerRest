@@ -19,7 +19,7 @@ async function createUser(){
     return;
     };
    
-    const request = await fetch('api/user', {
+    const request = await fetch('auth/user', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

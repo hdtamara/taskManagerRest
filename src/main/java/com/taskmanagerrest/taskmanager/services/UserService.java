@@ -2,10 +2,13 @@ package com.taskmanagerrest.taskmanager.services;
 
 
 import com.taskmanagerrest.taskmanager.dto.UserDto;
+import com.taskmanagerrest.taskmanager.entities.Rol;
 import com.taskmanagerrest.taskmanager.entities.User;
+import com.taskmanagerrest.taskmanager.enums.RolesList;
 import com.taskmanagerrest.taskmanager.exception.UserAlreadyExistsException;
 import com.taskmanagerrest.taskmanager.exception.UserNotEnabledException;
 import com.taskmanagerrest.taskmanager.exception.UserNotFoundException;
+import com.taskmanagerrest.taskmanager.repository.RolRepository;
 import com.taskmanagerrest.taskmanager.repository.UserRepository;
 
 import de.mkammerer.argon2.Argon2;
@@ -14,15 +17,20 @@ import de.mkammerer.argon2.Argon2Factory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.security.auth.login.CredentialException;
 
 @Service
 public class UserService implements  IUserService{
     @Autowired
-    private UserRepository userRepository;    
+    private UserRepository userRepository;
+
+    @Autowired
+    RolRepository rolRepository;
 
     @Override
     public List<User> findAll() {
@@ -41,14 +49,24 @@ public class UserService implements  IUserService{
     }
 
     @Override
-    public User createUser(UserDto user) throws UserAlreadyExistsException {       
-        
-        
+    public User createUser(UserDto user) throws UserAlreadyExistsException {
         User EmailUser = userRepository.findByEmail(user.getEmail());
         if(EmailUser!=null){
             throw new UserAlreadyExistsException("User already exists with email: "+user.getEmail());
         }
-        User newUser = User.build(0, user.getName(), user.getLastName(), user.getEmail(), user.getImage(), user.getPassword(),true);
+        User newUser = User.builder()
+                .name(user.getName())
+                .lastName(user.getLastName())
+                .email(user.getEmail())
+                .image(user.getImage())
+                .password(user.getPassword())
+                .build();
+        Set<Rol> roles = new HashSet<>();
+        roles.add(rolRepository.findByRoleName(RolesList.ROL_USER).get());
+        if (user.getRoles().contains("admin"))
+            roles.add(rolRepository.findByRoleName(RolesList.ROL_ADMIN).get());
+        newUser.setRoles(roles);
+        System.out.println(newUser);
         return userRepository.save(newUser);
         
     }
@@ -93,5 +111,10 @@ public class UserService implements  IUserService{
     public List<User> findByEnabled(boolean status) {
         
         return  (List<User>) userRepository.findByEnabled(status);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }
