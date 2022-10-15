@@ -8,7 +8,7 @@ import com.taskmanagerrest.taskmanager.exception.UserNotFoundException;
 import com.taskmanagerrest.taskmanager.services.ITaskService;
 import com.taskmanagerrest.taskmanager.services.IUserService;
 
-import io.jsonwebtoken.MalformedJwtException;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;

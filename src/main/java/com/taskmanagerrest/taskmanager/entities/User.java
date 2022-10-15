@@ -29,12 +29,12 @@ public class User {
     private  String image;   
     @Column(name = "password")    
     private String password;
-    @Column(name="status")
+    @Column(name="status") @Builder.Default
     private boolean enabled=true;
     @NotNull
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="USER_ROLE", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "rol_id"))
-    private Set<Rol> roles = new HashSet<>();
+    private Set<Rol> roles= new HashSet<>();;
 
 }

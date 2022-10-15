@@ -19,7 +19,7 @@ async function createUser(){
     return;
     };
    
-    const request = await fetch('auth/user', {
+    const request = await fetch('auth/register', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -29,6 +29,12 @@ async function createUser(){
       body: JSON.stringify(datos)    
     });
 
-    alert("Registered user successfully")
-    window.location.href = 'login.html';
+    if(request.ok){
+      alert("Registered user successfully")
+      window.location.href = 'index.html';
+    } else{
+      alert("Datos incorrectos")
+    }
+
+    
 }
