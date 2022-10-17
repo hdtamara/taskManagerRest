@@ -19,5 +19,5 @@ public class TaskDto {
     @NotBlank(message = "Finish Date shouldn't be empty")
     private LocalDate finishDate; 
     @NotBlank(message = "User  shouldn't be empty")
-    private Long userId;
+    private long userId;
 }

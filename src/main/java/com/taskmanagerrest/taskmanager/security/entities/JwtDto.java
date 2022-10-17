@@ -9,13 +9,13 @@ import java.util.Collection;
 @Data
 public class JwtDto {
     private  String token;
-    private String beares = "Bearer";
-    private String nombreUsuario;
+    private String beares = "Bearer ";
+    private String email;
     private Collection<? extends GrantedAuthority> authorities;
 
     public JwtDto(String token, String nombreUsuario, Collection<? extends GrantedAuthority> authorities) {
         this.token = token;
-        this.nombreUsuario = nombreUsuario;
+        this.email = nombreUsuario;
         this.authorities = authorities;
     }
 }

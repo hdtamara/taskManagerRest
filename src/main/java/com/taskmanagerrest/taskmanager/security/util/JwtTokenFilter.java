@@ -42,7 +42,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     }
     //Se quita la palabra Bearer del header y se valida
     private String getToken(HttpServletRequest request){
-        String header = request.getHeader("Authorization");
+        String header = request.getHeader("Authorization");        ;
         if (header != null && header.startsWith("Bearer"))
             return header.replace("Bearer ", "");
         return null;

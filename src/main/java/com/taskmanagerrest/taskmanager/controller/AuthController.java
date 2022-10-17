@@ -57,8 +57,18 @@ public class AuthController {
        
     }
     @PostMapping("/register")
-    public ResponseEntity<User> createUser(@RequestBody @Valid UserDto user) throws UserAlreadyExistsException{
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return new ResponseEntity<>(userService.createUser(user),HttpStatus.CREATED);
+    public ResponseEntity<Object> createUser(@RequestBody @Valid UserDto user,BindingResult bindingResult) throws UserAlreadyExistsException{
+            try {
+                user.setPassword(passwordEncoder.encode(user.getPassword()));
+            return new ResponseEntity<>(userService.createUser(user),HttpStatus.CREATED);
+            } catch (Exception e) {
+                System.out.println(e);
+                return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+                
+            }
+        
+            
     }
+      
+    
 }

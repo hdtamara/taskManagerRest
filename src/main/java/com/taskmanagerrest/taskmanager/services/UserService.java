@@ -72,8 +72,8 @@ public class UserService implements  IUserService{
     }
 
     @Override
-    public void updateUSer(Long id) {
-
+    public void updateUSer(User user) {
+        userRepository.save(user);
     }
 
     @Override

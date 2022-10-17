@@ -18,7 +18,7 @@ public interface IUserService   {
 
     public User createUser(UserDto user) throws UserAlreadyExistsException;
 
-    public void updateUSer(Long id);
+    public void updateUSer(User user);
 
     public void deleteUser(Long id) throws UserNotFoundException;
 

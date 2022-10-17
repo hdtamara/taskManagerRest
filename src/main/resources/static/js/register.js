@@ -7,7 +7,7 @@ async function createUser(){
     datos.lastName = document.getElementById('last_name').value;
     datos.email = document.getElementById('email').value ;
     datos.password = document.getElementById('password').value ;
-    //datos.profile = document.getElementById('profile').value;
+    datos.image = document.getElementById('image').value;
 
     console.log(datos.password)
    

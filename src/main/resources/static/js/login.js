@@ -3,7 +3,7 @@ async function login(){
     datos.email = document.getElementById('email').value;
     datos.password = document.getElementById('password').value; 
     
-   
+    
     const request = await fetch('auth/login', {
       method: 'POST',
       headers: {
@@ -12,14 +12,18 @@ async function login(){
       },
 
       body: JSON.stringify(datos)
+    }).then(request=>request.clone().json());
+   
+    let roles = []
+    request.authorities.forEach(element => {
+      roles.push(element.authority)
     });
-    console.log(request);
-    const token = await request.text(); 
 
-    if(request.ok){
+    if(request != ""){
 
-        localStorage.token = token;
-        localStorage.email = datos.email; 
+        localStorage.token =request.beares+request.token;
+        localStorage.email = request.email;
+        localStorage.rol = roles;  
         window.location.href = 'taskslist.html'
     } else{
         alert("Las credenciales son incorrectas. Intente nuevamente")

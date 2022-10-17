@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,7 +29,7 @@ public class TaskController {
    
     private  final IUserService userService;
 
-    @GetMapping("/task")
+    @GetMapping("/admin")
     public ResponseEntity<List<Task>> findAll(@RequestHeader(value = "Authorization") String token)  {
         System.out.println(token);        
 
@@ -40,28 +39,28 @@ public class TaskController {
     }
 
     @PostMapping("/admin")
-    public ResponseEntity<Task> createTask(@RequestBody @Validated TaskDto task, @RequestHeader(value = "Authorization") String token) throws UserNotFoundException{
-
+    public ResponseEntity<Task> createTask(@RequestBody  TaskDto task) throws UserNotFoundException{
+        System.out.println(task.toString());
         return new ResponseEntity<>(taskService.createTask(task), HttpStatus.CREATED);
     }
 
-    @PutMapping("/task/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<Task> updateTask(@PathVariable Long id,@RequestHeader(value = "Authorization") String token) throws TaskNotFoundException{
 
         return new ResponseEntity<>(taskService.updatTask(id),HttpStatus.ACCEPTED) ;
     }
 
-    @DeleteMapping("/task/{id}")
+    @DeleteMapping("/admin/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id,@RequestHeader(value = "Authorization") String token) throws TaskNotFoundException{
 
         taskService.deleteTask(id);
          return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/task/{idUser}")
-    public ResponseEntity<List<Task>> findByUser(@PathVariable Long idUser,@RequestHeader(value = "Authorization") String token) throws UserNotFoundException{
+    @GetMapping("/{EmailUser}")
+    public ResponseEntity<List<Task>> findByUser(@PathVariable String EmailUser,@RequestHeader(value = "Authorization") String token) throws UserNotFoundException{
 
-        User user = userService.finById(idUser);
+        User user = userService.findByEmail(EmailUser);
         return ResponseEntity.ok(taskService.finByUser(user));
     };
 }
