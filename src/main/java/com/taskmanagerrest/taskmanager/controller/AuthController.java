@@ -64,14 +64,14 @@ public class AuthController {
        
     }
     @PostMapping("/register")
-    public ResponseEntity<Object> createUser(@RequestBody  UserDto user){
+    public ResponseEntity<User> createUser(@RequestBody  UserDto user){
         System.out.println(user.toString());
             try {
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
             return new ResponseEntity<>(userService.createUser(user),HttpStatus.CREATED);
             } catch (Exception e) {
                 System.out.println(e);
-                return new ResponseEntity<>(new Message(e.getMessage()),HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
                 
             }
         
