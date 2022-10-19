@@ -30,7 +30,7 @@ public class UserDto {
     private  String email;
     private  String image;
     @NotBlank(message = "Password shouldn't be empty")
-    @Size(min = 6, message = "Passwor shouldn't be < 10 caracteres")   
+    @Size(min = 6, message = "Passwor shouldn't be < 6 caracteres")
     private String password;
     private Set<Rol> roles = new HashSet<>();
 }
