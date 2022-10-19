@@ -47,7 +47,7 @@ public class AuthController {
         }
         
         if (bindingResult.hasErrors())
-            return new ResponseEntity<>(new Message("Check your credentiales"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Message("Revisa tus credenciales"), HttpStatus.BAD_REQUEST);
         try {
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser.getEmail(), loginUser.getPassword());
             Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
@@ -64,7 +64,7 @@ public class AuthController {
        
     }
     @PostMapping("/register")
-    public ResponseEntity<Object> createUser(@RequestBody @Valid UserDto user,BindingResult bindingResult) throws UserAlreadyExistsException{
+    public ResponseEntity<Object> createUser(@RequestBody  UserDto user,BindingResult bindingResult) throws UserAlreadyExistsException{
             try {
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
             return new ResponseEntity<>(userService.createUser(user),HttpStatus.CREATED);

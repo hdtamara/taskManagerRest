@@ -1,5 +1,5 @@
 package com.taskmanagerrest.taskmanager.controller;
-import com.taskmanagerrest.taskmanager.dto.UserEditDto;
+import com.taskmanagerrest.taskmanager.dto.UserDto;
 import com.taskmanagerrest.taskmanager.entities.User;
 import com.taskmanagerrest.taskmanager.exception.UserNotFoundException;
 import com.taskmanagerrest.taskmanager.services.IUserService;
@@ -36,7 +36,7 @@ public class UserController     {
     }
 
     @PutMapping("user/{id}")
-    public ResponseEntity<Void> updateUser(@Valid @PathVariable Long id,@RequestBody UserEditDto user) throws UserNotFoundException{
+    public ResponseEntity<Void> updateUser(@Valid @PathVariable Long id,@RequestBody UserDto user) throws UserNotFoundException{
         User UserToUpdate = userService.finById(id);
         if(UserToUpdate == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
