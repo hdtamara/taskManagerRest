@@ -68,9 +68,7 @@ public class AuthController {
         System.out.println(user.toString());
             try {
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
-                User userSave = userService.createUser(user);
-                System.out.println(userSave);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>(userService.createUser(user),HttpStatus.CREATED);
             } catch (Exception e) {
                 System.out.println(e);
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
