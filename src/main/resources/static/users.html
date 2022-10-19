@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+    <title>Lista de usuarios</title>
+</head>
+<body>
+  <main>
+    <section class="vh-100" style="background-color: #eee;">
+      <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-md-12 col-xl-10">           
+            
+
+            <div class="card">
+              <div class="card-header p-3">
+                <h5 class="mb-0"><i class="fas fa-tasks me-2"></i>Lista de usuarios</h5>
+              </div>
+              <div class="card-body overflow-auto" style="position: relative; height: 400px">
+  
+                <table class="table mb-0" id="tasklist">
+                  <thead>
+                  <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Editar</th>
+                    <th scope="col">Cambiar Estado</th>
+                  </tr>
+                  </thead>
+                  <tbody>           
+                  </tbody>
+                </table>
+  
+              </div>
+              <div class="card-footer text-end p-3" id="footerAddTask">             
+                <a href="./taskslist.html" class="btn btn-primary">Ir a tareas</a>
+              </div>
+            </div>
+  
+          </div>
+        </div>    
+  
+    </section>
+  
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header" >
+            <h5 class="modal-title" id="exampleModalLabel">Editar Empleado</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body overflow-auto">
+            <form>
+              <div class="mb-3">                
+                <input type="text" class="form-control" id="EditIdInput" aria-describedby="Id" placeholder="Id" hidden readonly>
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="EditNameInput" aria-describedby="Name" placeholder="Name" required>
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Apellido</label>
+                <input type="text" class="form-control" id="EditLastNameInput" aria-describedby="LastName" placeholder="LastName" required>
+              </div>
+              <div class="mb-3" >
+                <label for="exampleInputEmail1" class="form-label">Email</label>
+                <input type="email" class="form-control" id="EditEmailInput" aria-describedby="LastName" placeholder="Email" required>
+              </div>
+              <div class="mb-3" >
+                <label for="exampleInputEmail1" class="form-label">Imagen(ingresa el link)</label>
+                <input type="text" class="form-control" id="EditImagenInput" aria-describedby="imagen" placeholder="imagen" required>
+              </div>        
+          
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" onclick="editUser()" class="btn btn-primary">Editar usuario</button>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+  </main>
+
+
+<script src="js/users.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+
+</body>
+</html>
