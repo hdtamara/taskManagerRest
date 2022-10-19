@@ -32,5 +32,5 @@ public class UserDto {
     @NotBlank(message = "Password shouldn't be empty")
     @Size(min = 6, message = "Passwor shouldn't be < 6 caracteres")
     private String password;
-    private Set<Rol> roles = new HashSet<>();
+    //private Set<Rol> roles = new HashSet<>();
 }
