@@ -65,6 +65,7 @@ public class AuthController {
     }
     @PostMapping("/register")
     public ResponseEntity<Object> createUser(@RequestBody  UserDto user,BindingResult bindingResult) throws UserAlreadyExistsException{
+        System.out.println(user.toString());
             try {
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
             return new ResponseEntity<>(userService.createUser(user),HttpStatus.CREATED);
