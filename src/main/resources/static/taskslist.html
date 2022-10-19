@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 
-    <title>TasksList</title>
+    <title>Lista de Tareas</title>
 </head>
 <body>
   <main>
@@ -19,17 +19,17 @@
             
             <div class="card" id="findbyuser">
               <div class="card-header p-1">
-                <h5 class="mb-0"><i class="fas fa-tasks me-2"></i>Find by user</h5>
+                <h5 class="mb-0"><i class="fas fa-tasks me-2"></i>Buscar por usuario</h5>
               </div>
               <div class="card-body" style="position: relative; height: 100px">
 
             <div class="mb-3" >
               <select name="user" id="FindByUsers" class="form-control" required>
                 <div id="Users">
-                  <option value="0" selected> Select user</option>
+                  <option value="0" selected> Seleccionar Usuario</option>
                 </div>
               </select>
-              <button onclick="getTasksByUser()" class="btn btn-primary mt-1">Search</button>
+              <button onclick="getTasksByUser()" class="btn btn-primary mt-1">Buscar</button>
 
             </div> 
           </div>                      
@@ -39,7 +39,7 @@
 
             <div class="card">
               <div class="card-header p-3">
-                <h5 class="mb-0"><i class="fas fa-tasks me-2"></i>Task List</h5>
+                <h5 class="mb-0"><i class="fas fa-tasks me-2"></i>Lista de tareas</h5>
               </div>
               <div class="card-body overflow-auto" style="position: relative; height: 400px">
   
@@ -47,8 +47,8 @@
                   <thead>
                   <tr>
                     <th scope="col">Team Member</th>
-                    <th scope="col">Task</th>
-                    <th scope="col">Date</th>
+                    <th scope="col">Tarea</th>
+                    <th scope="col">Fecha</th>
                     <th scope="col">Actions</th>
                     <th scope="col">Status</th>
                   </tr>
@@ -58,8 +58,9 @@
                 </table>
   
               </div>
-              <div class="card-footer text-end p-3" id="footerAddTask">              
-                <button class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#addModal" >Add Task</button>
+              <div class="card-footer text-end p-3 d-flex justify-content-between " id="footerAddTask">
+                <a href="./" class="btn btn-primary"  id = 'goToUsers' hidden>Ir a usuario</a>              
+                <button class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#addModal" >Agregar Tarea</button>
   
               </div>
             </div>
@@ -73,7 +74,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header" >
-            <h5 class="modal-title" id="exampleModalLabel">Add Task</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Agregar Tarea</h5>
             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -96,8 +97,8 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" onclick="editUser()" class="btn btn-primary">Create Task</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="button" onclick="createTask()" class="btn btn-primary">Crear Tarea</button>
           </div>
         </div>
       </div>

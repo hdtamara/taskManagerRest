@@ -3,7 +3,7 @@ package com.taskmanagerrest.taskmanager.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 
@@ -21,6 +21,7 @@ import java.util.Set;
 @AllArgsConstructor(staticName = "build")
 @Builder
 public class UserDto {
+    @NotNull
     @NotBlank(message =  "name shouldn't be empty")    
     private String name;
     private  String lastName;

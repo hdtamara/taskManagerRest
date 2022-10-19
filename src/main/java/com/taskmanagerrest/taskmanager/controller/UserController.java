@@ -1,7 +1,4 @@
 package com.taskmanagerrest.taskmanager.controller;
-
-
-import com.taskmanagerrest.taskmanager.dto.UserDto;
 import com.taskmanagerrest.taskmanager.dto.UserEditDto;
 import com.taskmanagerrest.taskmanager.entities.User;
 import com.taskmanagerrest.taskmanager.exception.UserNotFoundException;
@@ -9,8 +6,6 @@ import com.taskmanagerrest.taskmanager.services.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -25,7 +20,7 @@ public class UserController     {
 
     
     private final   IUserService userService;    
-    private  final PasswordEncoder passwordEncoder;
+  
 
     @GetMapping("/users")
     public ResponseEntity<List<User>> findAll(){

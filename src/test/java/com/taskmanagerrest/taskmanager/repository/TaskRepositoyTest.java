@@ -1,7 +1,9 @@
 package com.taskmanagerrest.taskmanager.repository;
 
+import com.taskmanagerrest.taskmanager.entities.Rol;
 import com.taskmanagerrest.taskmanager.entities.Task;
 import com.taskmanagerrest.taskmanager.entities.User;
+import com.taskmanagerrest.taskmanager.enums.RolesList;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,7 +12,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,9 +28,13 @@ class TaskRepositoyTest {
 
     private  User user;
     private User user2;
+    private  Rol rol;
 
     @BeforeEach
     void setUp() {
+        Set<Rol> rolesUser= new HashSet<>();
+        rol = Rol.builder().id(1L).roleName(RolesList.ROL_ADMIN).build();
+        rolesUser.add(rol);
         user = User.builder()
                 .name("Alejandro")
                 .lastName("Fernandez")
@@ -41,6 +49,9 @@ class TaskRepositoyTest {
                 .password("123456")
                 .enabled(true)
                 .build();
+
+        user.setRoles(rolesUser);
+        user2.setRoles(rolesUser);
         List<User> users = new ArrayList<>();
         users.add(user);
         users.add(user2);

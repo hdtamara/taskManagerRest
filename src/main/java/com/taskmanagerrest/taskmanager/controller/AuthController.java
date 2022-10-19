@@ -39,6 +39,13 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(@Valid @RequestBody LoginUser loginUser, BindingResult bindingResult) throws CredentialException, UserNotFoundException, UserNotEnabledException {
+        User userLogin = userService.findByEmail(loginUser.getEmail());
+        if(userLogin == null){
+            return new ResponseEntity<>(new Message("Usuario no existe"),HttpStatus.BAD_REQUEST);
+        } else if(!userLogin.isEnabled()){
+            return new ResponseEntity<>(new Message("Usuario deshabilitado"),HttpStatus.UNAUTHORIZED);
+        }
+        
         if (bindingResult.hasErrors())
             return new ResponseEntity<>(new Message("Check your credentiales"), HttpStatus.BAD_REQUEST);
         try {

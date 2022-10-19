@@ -6,13 +6,12 @@ import com.taskmanagerrest.taskmanager.entities.Rol;
 import com.taskmanagerrest.taskmanager.entities.User;
 import com.taskmanagerrest.taskmanager.enums.RolesList;
 import com.taskmanagerrest.taskmanager.exception.UserAlreadyExistsException;
-import com.taskmanagerrest.taskmanager.exception.UserNotEnabledException;
+
 import com.taskmanagerrest.taskmanager.exception.UserNotFoundException;
 import com.taskmanagerrest.taskmanager.repository.RolRepository;
 import com.taskmanagerrest.taskmanager.repository.UserRepository;
 
-import de.mkammerer.argon2.Argon2;
-import de.mkammerer.argon2.Argon2Factory;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.security.auth.login.CredentialException;
+
 
 @Service
 public class UserService implements  IUserService{
@@ -63,8 +62,6 @@ public class UserService implements  IUserService{
                 .build();
         Set<Rol> roles = new HashSet<>();
         roles.add(rolRepository.findByRoleName(RolesList.ROL_USER).get());
-        if (user.getRoles().contains("admin"))
-            roles.add(rolRepository.findByRoleName(RolesList.ROL_ADMIN).get());
         newUser.setRoles(roles);
         System.out.println(newUser);
         return userRepository.save(newUser);
@@ -87,25 +84,7 @@ public class UserService implements  IUserService{
 
     }
 
-    @Override
-    public User checkCredentiales(User user) throws UserNotFoundException,CredentialException, UserNotEnabledException {
-        User userLogin = userRepository.findByEmail(user.getEmail());
-        if(userLogin==null){
-            throw new UserNotFoundException("user not found with email : "+ user.getEmail());
-        }
-
-        if(!userLogin.isEnabled()){
-            throw new UserNotEnabledException("user not enabled with email : "+ user.getEmail());
-        }
-
-        Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
-        if(argon2.verify(userLogin.getPassword(), user.getPassword())){
-            return userLogin;
-        };
-
-        throw new CredentialException("Wrong credentials");
-        
-    }
+  
 
     @Override
     public List<User> findByEnabled(boolean status) {

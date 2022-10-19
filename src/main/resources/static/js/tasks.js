@@ -19,6 +19,8 @@ $(document).ready(function() {
     }
 
    else if(localStorage.rol.includes("ADMIN")){
+
+      document.getElementById('goToUsers').hidden = false;
       const request = await fetch('/task/admin', {
         method: 'GET',  
         headers: getHeaders(),

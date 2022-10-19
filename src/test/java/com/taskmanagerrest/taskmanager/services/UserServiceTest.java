@@ -1,10 +1,13 @@
 package com.taskmanagerrest.taskmanager.services;
 
 import com.taskmanagerrest.taskmanager.dto.UserDto;
+import com.taskmanagerrest.taskmanager.entities.Rol;
 import com.taskmanagerrest.taskmanager.entities.User;
+import com.taskmanagerrest.taskmanager.enums.RolesList;
 import com.taskmanagerrest.taskmanager.exception.UserAlreadyExistsException;
 import com.taskmanagerrest.taskmanager.exception.UserNotEnabledException;
 import com.taskmanagerrest.taskmanager.exception.UserNotFoundException;
+import com.taskmanagerrest.taskmanager.repository.RolRepository;
 import com.taskmanagerrest.taskmanager.repository.UserRepository;
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
@@ -18,6 +21,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.security.auth.login.CredentialException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,8 +40,8 @@ class UserServiceTest {
     @Mock
     private UserRepository userRepository;
 
-    @Mock
-    private Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
+   @Mock
+   private RolRepository rolRepository;
 
     @InjectMocks
     private UserService userService;
@@ -119,12 +123,16 @@ class UserServiceTest {
     @DisplayName("Test para crear un usuario")
     @Test
     void createUser() throws UserAlreadyExistsException {
+        HashSet<Rol> roles = new HashSet<>();
+        Rol rol = Rol.builder().roleName(RolesList.ROL_USER).build();
+        roles.add(rol);
         User userToSave = User.builder()
                 .name("Alejandro")
                 .lastName("Fernandez")
                 .email("alejandro@correo.com")
                 .password("123456")
                 .enabled(true)
+                .roles(roles)
                 .build();
 
         UserDto userDto = UserDto.builder()
@@ -133,10 +141,12 @@ class UserServiceTest {
                 .email("alejandro@correo.com")
                 .password("123456")
                 .build();
+        Rol rolUser = Rol.builder().roleName(RolesList.ROL_USER).build();
+        Rol rolAdmin = Rol.builder().roleName(RolesList.ROL_ADMIN).build();
         //given
         given(userRepository.findByEmail(userToSave.getEmail())).willReturn(null);
         given(userRepository.save(userToSave)).willReturn(userToSave);
-        //when
+        given(rolRepository.findByRoleName(RolesList.ROL_USER)).willReturn(Optional.ofNullable(rolUser));
         User userCreate = userService.createUser(userDto);
 
         //then
@@ -212,52 +222,6 @@ class UserServiceTest {
         verify(userRepository,never()).save(any());
 
 
-
-    }
-
-    @Test
-    void checkCredentiales() throws UserNotFoundException, CredentialException, UserNotEnabledException {
-        //given
-        given(userRepository.findByEmail(anyString())).willReturn(user);
-
-        //when
-        assertThatThrownBy(()->userService.checkCredentiales(user))
-                .isInstanceOf(CredentialException.class)
-                //then
-                .hasMessageContaining("Wrong credentials");
-
-    }
-
-    @Test
-    void checkCredentialesUserNotFound() throws UserNotFoundException, CredentialException, UserNotEnabledException {
-        //given
-
-        given(userRepository.findByEmail(anyString())).willReturn(null);
-
-        //when
-
-        assertThatThrownBy(()->userService.checkCredentiales(user))
-                .isInstanceOf(UserNotFoundException.class)
-                .hasMessageContaining("user not found with email : "+ user.getEmail());
-        //then
-        verify(argon2,never()).verify(anyString(),anyString());
-
-    }
-
-    @Test
-    void checkCredentialesUserNotEnabled() throws UserNotFoundException, CredentialException, UserNotEnabledException {
-        //given
-
-        given(userRepository.findByEmail(anyString())).willReturn(user2);
-
-
-        //when
-
-        assertThatThrownBy(()->userService.checkCredentiales(user2))
-                .isInstanceOf(UserNotEnabledException.class)
-                .hasMessageContaining("user not enabled with email : "+ user2.getEmail());
-        //then
-        verify(argon2,never()).verify(anyString(),anyString());
 
     }
 

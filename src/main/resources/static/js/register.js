@@ -15,7 +15,7 @@ async function createUser(){
    console.log(repeat_password)
 
    if(repeat_password != datos.password){
-    alert('Passwords are different');
+    alert('Las constraseñas son diferentes');
     return;
     };
    
@@ -30,7 +30,7 @@ async function createUser(){
     });
 
     if(request.ok){
-      alert("Registered user successfully")
+      alert("Usuario Registrado")
       window.location.href = 'index.html';
     } else{
       alert("Datos incorrectos")

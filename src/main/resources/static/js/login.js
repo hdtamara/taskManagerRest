@@ -23,8 +23,14 @@ async function login(){
 
         localStorage.token =request.beares+request.token;
         localStorage.email = request.email;
-        localStorage.rol = roles;  
-        window.location.href = 'taskslist.html'
+        localStorage.rol = roles;
+        
+        if(roles.includes('ROL_ADMIN')){
+          window.location.href = 'menu.html'
+        } else{
+          window.location.href = 'taskslist.html'
+        }
+        
     } else{
         alert("Las credenciales son incorrectas. Intente nuevamente")
     }

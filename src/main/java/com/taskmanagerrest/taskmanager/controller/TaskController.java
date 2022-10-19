@@ -30,11 +30,7 @@ public class TaskController {
     private  final IUserService userService;
 
     @GetMapping("/admin")
-    public ResponseEntity<List<Task>> findAll(@RequestHeader(value = "Authorization") String token)  {
-        System.out.println(token);        
-
-
-        
+    public ResponseEntity<List<Task>> findAll()  {
         return ResponseEntity.ok(taskService.findAll());
     }
 
@@ -45,20 +41,20 @@ public class TaskController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long id,@RequestHeader(value = "Authorization") String token) throws TaskNotFoundException{
+    public ResponseEntity<Task> updateTask(@PathVariable Long id) throws TaskNotFoundException{
 
         return new ResponseEntity<>(taskService.updatTask(id),HttpStatus.ACCEPTED) ;
     }
 
     @DeleteMapping("/admin/{id}")
-    public ResponseEntity<Void> deleteTask(@PathVariable Long id,@RequestHeader(value = "Authorization") String token) throws TaskNotFoundException{
+    public ResponseEntity<Void> deleteTask(@PathVariable Long id) throws TaskNotFoundException{
 
         taskService.deleteTask(id);
          return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/{EmailUser}")
-    public ResponseEntity<List<Task>> findByUser(@PathVariable String EmailUser,@RequestHeader(value = "Authorization") String token) throws UserNotFoundException{
+    public ResponseEntity<List<Task>> findByUser(@PathVariable String EmailUser) throws UserNotFoundException{
 
         User user = userService.findByEmail(EmailUser);
         return ResponseEntity.ok(taskService.finByUser(user));
